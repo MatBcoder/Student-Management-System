@@ -40,6 +40,7 @@ DELETE /students/{id}
 
 * PostgreSQL Database
 * Spring Data JPA
+* Handle exceptions
 * Service Layer
 * Repository Layer
 * Frontend UI
