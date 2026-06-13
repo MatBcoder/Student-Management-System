@@ -2,25 +2,30 @@ package com.proj1.spring1proj.controller;
 
 import com.proj1.spring1proj.model.Student;
 import org.springframework.web.bind.annotation.*;
+import com.proj1.spring1proj.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class StudentController {
-    private List<Student> students = new ArrayList<>();
+    private final StudentRepository studentRepository;
+
+    public StudentController(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @GetMapping("/students")
-    public List<Student> getStudents(){
-        return students;
+    public List<Student> getStudents() {
+        return studentRepository.findAll();
     }
 
     @PostMapping("/students")
-    public Student addStudent(@RequestBody Student student){
-        students.add(student);
-        return student;
+    public Student addStudent(@RequestBody Student student) {
+        return studentRepository.save(student);
     }
 
+    /* NB: Will be reimplemted using StudentRespository
     @PutMapping("/students/{id}")
     public Student updateStudent(@PathVariable Long id, @RequestBody Student updatedStudent){
         for (Student student : students){
@@ -45,6 +50,8 @@ public class StudentController {
         }
         return "Student not found";
     }
+
+     */
 
 
 }
