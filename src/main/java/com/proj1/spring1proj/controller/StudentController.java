@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/students")
 public class StudentController {
     private final StudentService studentService;
 
@@ -15,43 +16,31 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/students")
+    @GetMapping()
     public List<Student> getStudents() {
         return studentService.getStudents();
     }
 
-    @PostMapping("/students")
+    @GetMapping("/{id}")
+    public Student getStudentById(@PathVariable Long id){
+        return studentService.getStudentById(id);
+    }
+
+    @PostMapping
     public Student addStudent(@RequestBody Student student) {
         return studentService.addStudent(student);
     }
 
-    /* NB: Will be reimplemted using StudentRespository
-    @PutMapping("/students/{id}")
+    @PutMapping("/{id}")
     public Student updateStudent(@PathVariable Long id, @RequestBody Student updatedStudent){
-        for (Student student : students){
-            if (student.getId().equals(id)){
-                student.setFirstName(updatedStudent.getFirstName());
-                student.setLastName(updatedStudent.getLastName());
-                student.setAge(updatedStudent.getAge());
-                student.setCourse(updatedStudent.getCourse());
-            }
-        }
-        return updatedStudent;
+        return studentService.updateStudent(id, updatedStudent);
     }
 
-    @DeleteMapping("/students/{id}")
+    @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable Long id){
-        for(Student student: students){
-            if(student.getId().equals(id)){
-                students.remove(student);
-                return "Student successfully deleted";
-
-            }
-        }
-        return "Student not found";
+        studentService.deleteStudent(id);
+        return "Student Successfully Deleted";
     }
-
-     */
 
 
 }

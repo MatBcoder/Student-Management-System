@@ -25,6 +25,28 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Student updateStudent(Long id, Student updatedStudent){
+        Student student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Student Not Found"));
+
+        student.setFirstName(updatedStudent.getFirstName());
+        student.setLastName(updatedStudent.getLastName());
+        student.setAge(updatedStudent.getAge());
+        student.setCourse(updatedStudent.getCourse());
+
+        return studentRepository.save(student);
+    }
+
+    public Student getStudentById(Long id){
+        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Student Not Found"));
+    }
+
+    public void deleteStudent(Long id){
+        if(!studentRepository.existsById(id)){
+            throw new RuntimeException("Student Does not Exit");
+        }
+
+        studentRepository.deleteById(id);
+    }
 }
 
 
