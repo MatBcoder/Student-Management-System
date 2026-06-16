@@ -1,28 +1,28 @@
 package com.proj1.spring1proj.controller;
 
 import com.proj1.spring1proj.model.Student;
+import com.proj1.spring1proj.service.StudentService;
 import org.springframework.web.bind.annotation.*;
-import com.proj1.spring1proj.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class StudentController {
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping("/students")
     public List<Student> getStudents() {
-        return studentRepository.findAll();
+        return studentService.getStudents();
     }
 
     @PostMapping("/students")
     public Student addStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+        return studentService.addStudent(student);
     }
 
     /* NB: Will be reimplemted using StudentRespository

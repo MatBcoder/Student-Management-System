@@ -11,14 +11,17 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
+
         this.studentRepository = studentRepository;
     }
 
     public List<Student> getStudents(){
+
         return studentRepository.findAll();
     }
 
     public Student addStudent(Student student){
+
         return studentRepository.save(student);
     }
 
