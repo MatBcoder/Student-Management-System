@@ -1,5 +1,6 @@
 package com.proj1.spring1proj.service;
 
+import com.proj1.spring1proj.exception.StudentNotFoundException;
 import com.proj1.spring1proj.model.Student;
 import com.proj1.spring1proj.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class StudentService {
     }
 
     public Student updateStudent(Long id, Student updatedStudent){
-        Student student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Student Not Found"));
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
         student.setFirstName(updatedStudent.getFirstName());
         student.setLastName(updatedStudent.getLastName());
@@ -37,12 +38,12 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id){
-        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("Student Not Found"));
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
     public void deleteStudent(Long id){
         if(!studentRepository.existsById(id)){
-            throw new RuntimeException("Student Does not Exit");
+            throw new StudentNotFoundException(id);
         }
 
         studentRepository.deleteById(id);
