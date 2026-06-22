@@ -2,6 +2,7 @@ package com.proj1.spring1proj.controller;
 
 import com.proj1.spring1proj.model.Student;
 import com.proj1.spring1proj.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,12 +28,12 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
+    public Student addStudent(@Valid @RequestBody Student student) {
         return studentService.addStudent(student);
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student updatedStudent){
+    public Student updateStudent(@PathVariable Long id, @Valid @RequestBody Student updatedStudent){
         return studentService.updateStudent(id, updatedStudent);
     }
 
