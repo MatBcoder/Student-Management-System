@@ -1,6 +1,8 @@
 package com.proj1.spring1proj.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "students")
@@ -8,9 +10,17 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "First name is required")
     private String firstName;
+
+    @NotBlank(message = "Last name is required")
     private String lastName;
+
+    @Min(value = 16, message = "Age must be at least 16")
     private int age;
+
+    @NotBlank(message = "Course is required")
     private String course;
 
 /* Lombok dependency can be used to create the getters and setters for the attributes of the above
