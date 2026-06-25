@@ -22,7 +22,11 @@ public class StudentService {
     }
 
     public Student addStudent(Student student){
+        Student savedStudent = studentRepository.save(student);
 
+        String studentNumber = String.format("ST%06d", savedStudent.getId());
+
+        savedStudent.setStudentNumber(studentNumber);
         return studentRepository.save(student);
     }
 

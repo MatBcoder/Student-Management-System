@@ -11,6 +11,9 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String studentNumber;
+
     @NotBlank(message = "First name is required")
     private String firstName;
 
@@ -59,6 +62,14 @@ But I'll do everything manually for now
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
     public String getFirstName() {
