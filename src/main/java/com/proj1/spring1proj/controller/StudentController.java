@@ -43,5 +43,10 @@ public class StudentController {
         return "Student Successfully Deleted";
     }
 
+    @GetMapping("/search")
+    public List<Student> searchStudents(@RequestParam String keyword){
+        return studentService.searchStudents(keyword);
+    }
+
 
 }
