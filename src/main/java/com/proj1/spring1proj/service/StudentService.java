@@ -31,7 +31,7 @@ public class StudentService {
         String studentNumber = String.format("ST%06d", savedStudent.getId());
 
         savedStudent.setStudentNumber(studentNumber);
-        return studentRepository.save(student);
+        return studentRepository.save(savedStudent);
     }
 
     public Student updateStudent(Long id, Student updatedStudent){
