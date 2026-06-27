@@ -3,6 +3,10 @@ package com.proj1.spring1proj.service;
 import com.proj1.spring1proj.exception.StudentNotFoundException;
 import com.proj1.spring1proj.model.Student;
 import com.proj1.spring1proj.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +59,14 @@ public class StudentService {
 
     public List<Student> searchStudents(String keyword){
         return studentRepository.findByStudentNumberContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(keyword, keyword, keyword);
+    }
+
+    public Page<Student> getStudents(int page, int size, String sortBy, String direction){
+        Sort sort = direction.equalsIgnoreCase("desc")? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return studentRepository.findAll(pageable);
     }
 }
 
