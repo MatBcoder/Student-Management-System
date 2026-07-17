@@ -58,8 +58,6 @@ public class StudentController {
             @RequestParam(defaultValue = "asc") String direction){
         return studentService.getStudents(page, size, sortBy, direction);
     }
-
-
-
+    
 
 }
