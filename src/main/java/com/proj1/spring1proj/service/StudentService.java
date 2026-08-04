@@ -34,8 +34,8 @@ public class StudentService {
         return studentRepository.save(savedStudent);
     }
 
-    public Student updateStudent(Long id, Student updatedStudent){
-        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    public Student updateStudent(String studentNumber, Student updatedStudent){
+        Student student = studentRepository.findByStudentNumber(studentNumber).orElseThrow(() -> new StudentNotFoundException(studentNumber));
 
         student.setFirstName(updatedStudent.getFirstName());
         student.setLastName(updatedStudent.getLastName());
@@ -45,16 +45,13 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student getStudentById(Long id){
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    public Student getStudentByStudentNumber(String studentNumber){
+        return studentRepository.findByStudentNumber(studentNumber).orElseThrow(() -> new StudentNotFoundException(studentNumber));
     }
 
-    public void deleteStudent(Long id){
-        if(!studentRepository.existsById(id)){
-            throw new StudentNotFoundException(id);
-        }
-
-        studentRepository.deleteById(id);
+    public void deleteStudent(String studentNumber){
+        Student student = studentRepository.findByStudentNumber(studentNumber).orElseThrow(() -> new StudentNotFoundException(studentNumber));
+        studentRepository.delete(student);
     }
 
     public List<Student> searchStudents(String keyword){
