@@ -20,10 +20,10 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getStudents(){
+    /*public List<Student> getStudents(){
 
         return studentRepository.findAll();
-    }
+    }*/
 
     public Student addStudent(Student student){
         Student savedStudent = studentRepository.save(student);

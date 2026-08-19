@@ -18,9 +18,18 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping()
+    /*@GetMapping()
     public List<Student> getStudents() {
         return studentService.getStudents();
+    }*/
+
+    @GetMapping()
+    public Page<Student> getStudents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "studentNumber") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction){
+        return studentService.getStudents(page, size, sortBy, direction);
     }
 
     @GetMapping("/{studentNumber}")
@@ -50,14 +59,5 @@ public class StudentController {
         return studentService.searchStudents(keyword);
     }
 
-    @GetMapping("/pages")
-    public Page<Student> getStudents(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "studentNumber") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction){
-        return studentService.getStudents(page, size, sortBy, direction);
-    }
-    
 
 }
