@@ -54,16 +54,21 @@ public class StudentService {
         studentRepository.delete(student);
     }
 
-    public List<Student> searchStudents(String keyword){
-        return studentRepository.findByStudentNumberContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(keyword, keyword, keyword);
-    }
-
-    public Page<Student> getStudents(int page, int size, String sortBy, String direction){
+    public Page<Student> getStudents(int page, int size, String sortBy, String direction, String keyword){
         Sort sort = direction.equalsIgnoreCase("desc")? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return studentRepository.findAll(pageable);
+        if (keyword== null || keyword.isBlank()){
+           return studentRepository.findAll(pageable);
+        }
+
+        return studentRepository.findByStudentNumberContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrCourseContainingIgnoreCase(
+                keyword,
+                keyword,
+                keyword,
+                keyword,
+                pageable);
     }
 }
 

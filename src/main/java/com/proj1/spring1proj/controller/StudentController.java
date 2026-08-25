@@ -28,8 +28,9 @@ public class StudentController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "studentNumber") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction){
-        return studentService.getStudents(page, size, sortBy, direction);
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "") String keyword){
+        return studentService.getStudents(page, size, sortBy, direction, keyword);
     }
 
     @GetMapping("/{studentNumber}")
@@ -53,11 +54,11 @@ public class StudentController {
         return "Student Successfully Deleted";
     }
 
-    @GetMapping("/search")
+    /*@GetMapping("/search")
     public List<Student> searchStudents(@RequestParam String keyword){
 
         return studentService.searchStudents(keyword);
-    }
+    }*/
 
 
 }
