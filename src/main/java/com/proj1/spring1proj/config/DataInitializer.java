@@ -11,9 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner createTestUser(
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder) {
+    CommandLineRunner createTestUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         return args -> {
 
