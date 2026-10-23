@@ -1,5 +1,6 @@
 package com.proj1.spring1proj.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.proj1.spring1proj.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,21 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
+                        // anyone can access authentication endpoints
                         .requestMatchers("/auth/**").permitAll()
+
+                        //Both Admin and Viewer roles can access and read student data
+                        .requestMatchers(HttpMethod.GET, "/students", "/students/**")
+                        .hasAnyRole("ADMIN", "VIEWER")
+
+                        //Only admin can add, edit and delete students
+                        .requestMatchers(HttpMethod.POST, "/students", "/students/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/students", "/students/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/students", "/students/**")
+                        .hasRole("ADMIN")
+
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
