@@ -1,5 +1,6 @@
 package com.proj1.spring1proj.controller;
 
+import com.proj1.spring1proj.dto.LoginResponse;
 import com.proj1.spring1proj.service.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,10 +20,20 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password){
+    public LoginResponse login(@RequestParam String username, @RequestParam String password){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
-        return jwtService.generateToken(username);
+
+        String role = authentication.getAuthorities()
+                .stream()
+                .map(authority -> authority.getAuthority())
+                .filter(authority -> authority.startsWith("ROLE_"))
+                .map(authority -> authority.substring(5))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Authenticated User has no role"));
+        String token = jwtService.generateToken(authentication.getName());
+
+        return new LoginResponse(token, role);
     }
 }
